@@ -1,0 +1,94 @@
+{
+  "mlp": {
+    "accuracy": 0.9731543624161074,
+    "classification_report": {
+      "Legitimate": {
+        "precision": 0.977657935285054,
+        "recall": 0.9945141065830722,
+        "f1-score": 0.986013986013986,
+        "support": 2552.0
+      },
+      "Fraudulent": {
+        "precision": 0.8372093023255814,
+        "recall": 0.5538461538461539,
+        "f1-score": 0.6666666666666666,
+        "support": 130.0
+      },
+      "accuracy": 0.9731543624161074,
+      "macro avg": {
+        "precision": 0.9074336188053177,
+        "recall": 0.774180130214613,
+        "f1-score": 0.8263403263403264,
+        "support": 2682.0
+      },
+      "weighted avg": {
+        "precision": 0.9708502088552511,
+        "recall": 0.9731543624161074,
+        "f1-score": 0.9705348094609839,
+        "support": 2682.0
+      }
+    }
+  },
+  "tabnet": {
+    "accuracy": 0.9627143922445935,
+    "classification_report": {
+      "Legitimate": {
+        "precision": 0.9650986342943855,
+        "recall": 0.9968652037617555,
+        "f1-score": 0.9807247494217425,
+        "support": 2552.0
+      },
+      "Fraudulent": {
+        "precision": 0.8260869565217391,
+        "recall": 0.2923076923076923,
+        "f1-score": 0.4318181818181818,
+        "support": 130.0
+      },
+      "accuracy": 0.9627143922445935,
+      "macro avg": {
+        "precision": 0.8955927954080622,
+        "recall": 0.6445864480347239,
+        "f1-score": 0.7062714656199621,
+        "support": 2682.0
+      },
+      "weighted avg": {
+        "precision": 0.9583605589362781,
+        "recall": 0.9627143922445935,
+        "f1-score": 0.9541185399554998,
+        "support": 2682.0
+      }
+    }
+  },
+  "transformer": {
+    "accuracy": 0.9675615212527964,
+    "classification_report": {
+      "Legitimate": {
+        "precision": 0.9760525299343376,
+        "recall": 0.9902037617554859,
+        "f1-score": 0.9830772223302859,
+        "support": 2552.0
+      },
+      "Fraudulent": {
+        "precision": 0.7311827956989247,
+        "recall": 0.5230769230769231,
+        "f1-score": 0.6098654708520179,
+        "support": 130.0
+      },
+      "accuracy": 0.9675615212527964,
+      "macro avg": {
+        "precision": 0.8536176628166312,
+        "recall": 0.7566403424162045,
+        "f1-score": 0.7964713465911519,
+        "support": 2682.0
+      },
+      "weighted avg": {
+        "precision": 0.9641833780139036,
+        "recall": 0.9675615212527964,
+        "f1-score": 0.9649871672623608,
+        "support": 2682.0
+      }
+    }
+  },
+  "best_model": "MLP (Baseline)",
+  "best_accuracy": 0.9731543624161074
+}
