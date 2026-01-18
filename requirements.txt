@@ -1,0 +1,12 @@
+# Fake Job Posting Detection - Requirements for Streamlit Cloud Deployment
+# Python version: 3.10 or 3.11
+
+streamlit>=1.37.0,<1.54.0
+tensorflow>=2.15.0,<2.17.0
+scikit-learn>=1.3.0,<2.0.0
+joblib>=1.3.0
+plotly>=5.18.0
+pandas>=2.0.0,<3.0.0
+numpy>=1.24.0,<2.0.0
+torch>=2.1.0
+pytorch-tabnet>=4.1.0
