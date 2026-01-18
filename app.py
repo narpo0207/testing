@@ -32,6 +32,20 @@ from pytorch_tabnet.tab_model import TabNetClassifier
 import warnings
 warnings.filterwarnings('ignore')
 
+# Fix for TensorFlow model loading compatibility
+# Handle 'quantization_config' parameter issue in newer TensorFlow versions
+original_dense_from_config = layers.Dense.from_config
+
+@classmethod
+def patched_dense_from_config(cls, config):
+    """Patched from_config to remove unsupported parameters"""
+    config = config.copy()
+    # Remove unsupported parameters from newer TensorFlow versions
+    config.pop('quantization_config', None)
+    return original_dense_from_config(config)
+
+layers.Dense.from_config = patched_dense_from_config
+
 # Page configuration
 st.set_page_config(
     page_title="Fake Job Detection",
@@ -123,49 +137,56 @@ class TransformerBlock(layers.Layer):
         return config
 
 # ==================== Load Models ====================
+# Use correct folder path (case-sensitive for deployment)
+MODELS_DIR = 'Models'
+DATASET_DIR = 'DATASET'
+
 @st.cache_resource
 def load_preprocessing():
     """Load preprocessing pipeline"""
-    preprocessing = joblib.load('Models/preprocessing_pipeline.pkl')
+    preprocessing = joblib.load(f'{MODELS_DIR}/preprocessing_pipeline.pkl')
     return preprocessing
 
 @st.cache_resource
 def load_mlp_model():
     """Load MLP model"""
-    model = load_model('Models/mlp_model.h5')
+    model = load_model(f'{MODELS_DIR}/mlp_model.h5', compile=False)
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return model
 
 @st.cache_resource
 def load_tabnet_model():
     """Load TabNet model"""
     model = TabNetClassifier()
-    model.load_model('Models/tabnet_model.zip')
+    model.load_model(f'{MODELS_DIR}/tabnet_model.zip')
     return model
 
 @st.cache_resource
 def load_transformer_model():
     """Load Transformer model with custom TransformerBlock"""
-    model = load_model('Models/transformer_model.h5', 
-                      custom_objects={'TransformerBlock': TransformerBlock})
+    model = load_model(f'{MODELS_DIR}/transformer_model.h5', 
+                      custom_objects={'TransformerBlock': TransformerBlock},
+                      compile=False)
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return model
 
 @st.cache_data
 def load_dataset():
     """Load dataset"""
-    df = pd.read_csv('DATASET/fake_job_postings (2).csv')
+    df = pd.read_csv(f'{DATASET_DIR}/fake_job_postings (2).csv')
     return df
 
 @st.cache_data
 def load_evaluation_results():
     """Load evaluation results"""
-    with open('Models/evaluation_results.json', 'r') as f:
+    with open(f'{MODELS_DIR}/evaluation_results.json', 'r') as f:
         results = json.load(f)
     return results
 
 @st.cache_data
 def load_model_comparison():
     """Load model comparison table"""
-    df = pd.read_csv('Models/model_comparison.csv')
+    df = pd.read_csv(f'{MODELS_DIR}/model_comparison.csv')
     return df
 
 # ==================== Preprocessing Function ====================
@@ -420,8 +441,8 @@ def main():
         
         with col1:
             st.write("**MLP Training**")
-            if os.path.exists('Models/mlp_history.json'):
-                with open('Models/mlp_history.json', 'r') as f:
+            if os.path.exists(f'{MODELS_DIR}/mlp_history.json'):
+                with open(f'{MODELS_DIR}/mlp_history.json', 'r') as f:
                     mlp_hist = json.load(f)
                 
                 fig_mlp = go.Figure()
@@ -432,8 +453,8 @@ def main():
         
         with col2:
             st.write("**TabNet Training**")
-            if os.path.exists('Models/tabnet_history.json'):
-                with open('Models/tabnet_history.json', 'r') as f:
+            if os.path.exists(f'{MODELS_DIR}/tabnet_history.json'):
+                with open(f'{MODELS_DIR}/tabnet_history.json', 'r') as f:
                     tabnet_hist = json.load(f)
                 
                 fig_tabnet = go.Figure()
@@ -444,8 +465,8 @@ def main():
         
         with col3:
             st.write("**Transformer Training**")
-            if os.path.exists('Models/transformer_history.json'):
-                with open('Models/transformer_history.json', 'r') as f:
+            if os.path.exists(f'{MODELS_DIR}/transformer_history.json'):
+                with open(f'{MODELS_DIR}/transformer_history.json', 'r') as f:
                     trans_hist = json.load(f)
                 
                 fig_trans = go.Figure()
