@@ -1,5 +1,5 @@
 [project]
-name = "UAP_ML"
+name = "testing"
 version = "0.1.0"
 description = "Fake Job Posting Detection using Deep Learning & Transfer Learning"
 authors = [
