@@ -126,26 +126,26 @@ class TransformerBlock(layers.Layer):
 @st.cache_resource
 def load_preprocessing():
     """Load preprocessing pipeline"""
-    preprocessing = joblib.load('models/preprocessing_pipeline.pkl')
+    preprocessing = joblib.load('Models/preprocessing_pipeline.pkl')
     return preprocessing
 
 @st.cache_resource
 def load_mlp_model():
     """Load MLP model"""
-    model = load_model('models/mlp_model.h5')
+    model = load_model('Models/mlp_model.h5')
     return model
 
 @st.cache_resource
 def load_tabnet_model():
     """Load TabNet model"""
     model = TabNetClassifier()
-    model.load_model('models/tabnet_model.zip')
+    model.load_model('Models/tabnet_model.zip')
     return model
 
 @st.cache_resource
 def load_transformer_model():
     """Load Transformer model with custom TransformerBlock"""
-    model = load_model('models/transformer_model.h5', 
+    model = load_model('Models/transformer_model.h5', 
                       custom_objects={'TransformerBlock': TransformerBlock})
     return model
 
@@ -158,14 +158,14 @@ def load_dataset():
 @st.cache_data
 def load_evaluation_results():
     """Load evaluation results"""
-    with open('models/evaluation_results.json', 'r') as f:
+    with open('Models/evaluation_results.json', 'r') as f:
         results = json.load(f)
     return results
 
 @st.cache_data
 def load_model_comparison():
     """Load model comparison table"""
-    df = pd.read_csv('models/model_comparison.csv')
+    df = pd.read_csv('Models/model_comparison.csv')
     return df
 
 # ==================== Preprocessing Function ====================
@@ -420,8 +420,8 @@ def main():
         
         with col1:
             st.write("**MLP Training**")
-            if os.path.exists('models/mlp_history.json'):
-                with open('models/mlp_history.json', 'r') as f:
+            if os.path.exists('Models/mlp_history.json'):
+                with open('Models/mlp_history.json', 'r') as f:
                     mlp_hist = json.load(f)
                 
                 fig_mlp = go.Figure()
@@ -432,8 +432,8 @@ def main():
         
         with col2:
             st.write("**TabNet Training**")
-            if os.path.exists('models/tabnet_history.json'):
-                with open('models/tabnet_history.json', 'r') as f:
+            if os.path.exists('Models/tabnet_history.json'):
+                with open('Models/tabnet_history.json', 'r') as f:
                     tabnet_hist = json.load(f)
                 
                 fig_tabnet = go.Figure()
@@ -444,8 +444,8 @@ def main():
         
         with col3:
             st.write("**Transformer Training**")
-            if os.path.exists('models/transformer_history.json'):
-                with open('models/transformer_history.json', 'r') as f:
+            if os.path.exists('Models/transformer_history.json'):
+                with open('Models/transformer_history.json', 'r') as f:
                     trans_hist = json.load(f)
                 
                 fig_trans = go.Figure()
