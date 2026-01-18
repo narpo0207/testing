@@ -1,0 +1,15 @@
+[project]
+name = "UAP_ML"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "narpo0207", email = "143424695+narpo0207@users.noreply.github.com"},
+]
+dependencies = ["streamlit>=1.52.2", "tensorflow>=2.20.0", "scikit-learn>=1.8.0", "joblib>=1.5.3", "plotly>=6.5.0", "pandas>=2.3.3", "numpy>=2.4.0", "torch>=2.9.1", "pytorch-tabnet>=4.1.0"]
+requires-python = "==3.11.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
