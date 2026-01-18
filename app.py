@@ -152,7 +152,7 @@ def load_transformer_model():
 @st.cache_data
 def load_dataset():
     """Load dataset"""
-    df = pd.read_csv('dataset/fake_job_postings (2).csv')
+    df = pd.read_csv('DATASET/fake_job_postings (2).csv')
     return df
 
 @st.cache_data
